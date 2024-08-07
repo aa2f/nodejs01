@@ -26,7 +26,8 @@ module.exports = {
         const product = await new PRODUCTS({
             name: req.body.name,
             price: req.body.price,
-            desc: req.body.desc
+            desc: req.body.desc,
+            rate: req.body.rate
         }).save();
 
         res.json({ "message": "Created successfully", "id": product.id, "name": product.name });
@@ -46,6 +47,10 @@ module.exports = {
 
             if(req.body.desc !== null){
                 product.desc = req.body.desc 
+            }
+
+            if(req.body.rate !== null){
+                product.rate = req.body.rate 
             }
 
             try {
