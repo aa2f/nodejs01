@@ -2,9 +2,9 @@ const PRODUCTS = require('../model/product');
 module.exports = {
     getProducts: async (req, res, next) => {
         const products = await PRODUCTS.find();
-
-        res.json({
-            result: products.map(res => {
+        
+        res.json(
+           products.map(res => {
                 return {
                     id: res.id,
                     name: res.name,
@@ -12,7 +12,7 @@ module.exports = {
                     desc: res.desc
                 }
             })
-        });
+        );
     },
     getProduct: async (req, res, next) => {
         const id = req.params.id;
