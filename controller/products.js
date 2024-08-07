@@ -2,14 +2,15 @@ const PRODUCTS = require('../model/product');
 module.exports = {
     getProducts: async (req, res, next) => {
         const products = await PRODUCTS.find();
-        
+
         res.json(
-           products.map(res => {
+            products.map(res => {
                 return {
                     id: res.id,
                     name: res.name,
                     price: res.price,
-                    desc: res.desc
+                    desc: res.desc,
+                    rate: res.rate
                 }
             })
         );
@@ -33,45 +34,49 @@ module.exports = {
         res.json({ "message": "Created successfully", "id": product.id, "name": product.name });
     },
 
-    updateProduct: async (req,res) => {
+    updateProduct: async (req, res) => {
         const id = req.params.id;
-        const product = await PRODUCTS.findById(id);
-        if(product != null){
-            if(req.body.name !== null){
-                product.name = req.body.name 
-            }
+        try {
+            var product = await PRODUCTS.findById(id);
 
-            if(req.body.price !== null){
-                product.price = req.body.price 
-            }
+            if (product !== null) {
+                if (req.body.name !== undefined) {
+                    product.name = req.body.name
+                }
 
-            if(req.body.desc !== null){
-                product.desc = req.body.desc 
-            }
+                if (req.body.price !== undefined) {
+                    product.price = req.body.price
+                }
 
-            if(req.body.rate !== null){
-                product.rate = req.body.rate 
-            }
+                if (req.body.desc !== undefined) {
+                    product.desc = req.body.desc
+                }
 
-            try {
+                if (req.body.rate !== undefined) {
+                    product.rate = req.body.rate
+                }
+
+
                 const updatedProduct = await product.save() //saving in DB
                 res.send(updatedProduct) // sending back as response
-              } catch (err) {
-                res.status(400).json({ message: err.message })
-              }
 
 
-        }else{
-            res.json({"message":"No data found"})
+
+            } else {
+                res.json({ "message": "No data found" })
+            }
+
+        } catch (err) {
+            res.status(400).json({ message: err.message })
         }
-        
+
     },
 
-    detelteProduct: async (req,res) => {
+    detelteProduct: async (req, res) => {
         const id = req.params.id;
         const product = await PRODUCTS.findByIdAndDelete(id);
 
-        res.json({"deleted": product});
+        res.json({ "deleted": product });
     }
 
 }
