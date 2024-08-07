@@ -10,7 +10,8 @@ module.exports = {
                     name: res.name,
                     price: res.price,
                     desc: res.desc,
-                    rate: res.rate
+                    rate: res.rate,
+                    date: res.date
                 }
             })
         );
@@ -28,7 +29,8 @@ module.exports = {
             name: req.body.name,
             price: req.body.price,
             desc: req.body.desc,
-            rate: req.body.rate
+            rate: req.body.rate,
+            date: req.body.date
         }).save();
 
         res.json({ "message": "Created successfully", "id": product.id, "name": product.name });
@@ -54,6 +56,10 @@ module.exports = {
 
                 if (req.body.rate !== undefined) {
                     product.rate = req.body.rate
+                }
+
+                if (req.body.date !== undefined) {
+                    product.date = req.body.date
                 }
 
 
