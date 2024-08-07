@@ -5,7 +5,7 @@ const {getProducts, createProduct, detelteProduct, getProduct, updateProduct} = 
 router.get('/',getProducts);
 router.get('/:id',getProduct);
 router.post('/',createProduct);
-router.patch('/:id',updateProduct)
+router.put('/:id',updateProduct)
 router.delete('/:id',detelteProduct)
 
 module.exports = router
